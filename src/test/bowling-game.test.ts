@@ -6,24 +6,26 @@ class BowlingGame {
   }
 
   calculateTotalScore(): number {
-    return Array.from({ length: 10 })
-      .map((_, i) => i)
-      .reduce(
-        ({ totalScore, currentFrameIndex }: { totalScore: number; currentFrameIndex: number }) => {
-          if (this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1] === 10) {
-            return {
-              totalScore: totalScore + 10 + this.rolls[currentFrameIndex + 2],
-              currentFrameIndex: currentFrameIndex + 2,
-            };
-          }
-
+    return this.frames().reduce(
+      ({ totalScore, currentFrameIndex }: { totalScore: number; currentFrameIndex: number }) => {
+        if (this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1] === 10) {
           return {
-            totalScore: totalScore + this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1],
+            totalScore: totalScore + 10 + this.rolls[currentFrameIndex + 2],
             currentFrameIndex: currentFrameIndex + 2,
           };
-        },
-        { totalScore: 0, currentFrameIndex: 0 }
-      ).totalScore;
+        }
+
+        return {
+          totalScore: totalScore + this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1],
+          currentFrameIndex: currentFrameIndex + 2,
+        };
+      },
+      { totalScore: 0, currentFrameIndex: 0 }
+    ).totalScore;
+  }
+
+  private frames() {
+    return Array.from({ length: 10 }).map((_, i) => i);
   }
 }
 
