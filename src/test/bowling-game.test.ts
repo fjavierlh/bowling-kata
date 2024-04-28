@@ -1,3 +1,8 @@
+type Score = {
+  totalScore: number;
+  currentFrameIndex: number;
+};
+
 class BowlingGame {
   rolls: number[] = [];
 
@@ -7,7 +12,7 @@ class BowlingGame {
 
   calculateTotalScore(): number {
     const score = this.frames().reduce(
-      ({ totalScore, currentFrameIndex }: { totalScore: number; currentFrameIndex: number }) => {
+      ({ totalScore, currentFrameIndex }: Score) => {
         if (this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1] === 10) {
           return {
             totalScore: totalScore + 10 + this.rolls[currentFrameIndex + 2],
