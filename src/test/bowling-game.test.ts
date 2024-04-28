@@ -27,8 +27,12 @@ describe('The Bowling game', () => {
   });
 
   it('calculates the score for gutter when no pins are bowled', () => {
-    Array.from({ length: 20 }).forEach(() => game.roll(0));
+    rollMany(20, 0);
 
     expect(game.calculateTotalScore()).toBe(0);
   });
+
+  function rollMany(times: number, pins: number) {
+    Array.from({ length: times }).forEach(() => game.roll(pins));
+  }
 });
