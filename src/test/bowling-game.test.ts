@@ -11,20 +11,22 @@ class BowlingGame {
 }
 
 describe('The Bowling game', () => {
-  it('can be created', () => {
-    const game = new BowlingGame();
+  let game: BowlingGame;
 
+  beforeEach(() => {
+    game = new BowlingGame();
+  });
+
+  it('can be created', () => {
     expect(game).toBeInstanceOf(BowlingGame);
   });
 
   it('should be able to make a roll', () => {
-    const game = new BowlingGame();
     game.roll(0);
     expect(game.rolls).toEqual([0]);
   });
 
   it('calculates the score for gutter when no pins are bowled', () => {
-    const game = new BowlingGame();
     Array.from({ length: 20 }).forEach(() => game.roll(0));
 
     expect(game.calculateTotalScore()).toBe(0);
