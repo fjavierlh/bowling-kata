@@ -103,6 +103,12 @@ describe('The Bowling game', () => {
     expect(game.calculateScore()).toBe(22);
   });
 
+  it('calculates the score when is perfect game', () => {
+    makePerfectGame();
+
+    expect(game.calculateScore()).toBe(300);
+  });
+
   function rollMany(times: number, pins: number) {
     Array.from({ length: times }).forEach(() => game.roll(pins));
   }
@@ -114,5 +120,9 @@ describe('The Bowling game', () => {
 
   function rollStrike() {
     game.roll(10);
+  }
+
+  function makePerfectGame() {
+    Array.from({ length: 12 }).forEach(rollStrike);
   }
 });
