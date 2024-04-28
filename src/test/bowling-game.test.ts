@@ -1,6 +1,6 @@
 type Score = {
-  totalScore: number;
-  currentFrameIndex: number;
+  score: number;
+  frame: number;
 };
 
 class BowlingGame {
@@ -11,55 +11,55 @@ class BowlingGame {
     this.rolls.push(pins);
   }
 
-  calculateTotalScore(): number {
+  calculatescore(): number {
     const score = this.frames().reduce(
-      ({ totalScore, currentFrameIndex }: Score) => {
-        if (this.isStrike(currentFrameIndex)) {
+      ({ score, frame }: Score) => {
+        if (this.isStrike(frame)) {
           return {
-            totalScore: totalScore + this.bonusForStrike(currentFrameIndex),
-            currentFrameIndex: currentFrameIndex + 1,
+            score: score + this.scoreForStrike(frame),
+            frame: frame + 1,
           };
         }
 
-        if (this.isSpare(currentFrameIndex)) {
+        if (this.isSpare(frame)) {
           return {
-            totalScore: totalScore + this.bonusForSpare(currentFrameIndex),
-            currentFrameIndex: currentFrameIndex + 2,
+            score: score + this.scoreForSpare(frame),
+            frame: frame + 2,
           };
         }
 
         return {
-          totalScore: totalScore + this.sumPinsIn(currentFrameIndex),
-          currentFrameIndex: currentFrameIndex + 2,
+          score: score + this.scoreIn(frame),
+          frame: frame + 2,
         };
       },
-      { totalScore: 0, currentFrameIndex: 0 }
+      { score: 0, frame: 0 }
     );
-    return score.totalScore;
+    return score.score;
   }
 
   private frames() {
     return Array.from({ length: 10 }).map((_, i) => i);
   }
 
-  private isStrike(currentFrameIndex: number) {
-    return this.rolls[currentFrameIndex] === this.maxScorePerFrame;
+  private isStrike(frame: number) {
+    return this.rolls[frame] === this.maxScorePerFrame;
   }
 
-  private bonusForStrike(currentFrameIndex: number): number {
-    return this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1] + this.rolls[currentFrameIndex + 2];
+  private scoreForStrike(frame: number): number {
+    return this.rolls[frame] + this.rolls[frame + 1] + this.rolls[frame + 2];
   }
 
-  private isSpare(currentFrameIndex: number) {
-    return this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1] === this.maxScorePerFrame;
+  private isSpare(frame: number) {
+    return this.rolls[frame] + this.rolls[frame + 1] === this.maxScorePerFrame;
   }
 
-  private bonusForSpare(currentFrameIndex: number): number {
-    return this.maxScorePerFrame + this.rolls[currentFrameIndex + 2];
+  private scoreForSpare(frame: number): number {
+    return this.maxScorePerFrame + this.rolls[frame + 2];
   }
 
-  private sumPinsIn(currentFrameIndex: number): number {
-    return this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1];
+  private scoreIn(frame: number): number {
+    return this.rolls[frame] + this.rolls[frame + 1];
   }
 }
 
@@ -82,7 +82,7 @@ describe('The Bowling game', () => {
   it('calculates the score when no pins are bowled', () => {
     rollMany(20, 0);
 
-    expect(game.calculateTotalScore()).toBe(0);
+    expect(game.calculatescore()).toBe(0);
   });
 
   it('calculates the score when an spare is done', () => {
@@ -91,7 +91,7 @@ describe('The Bowling game', () => {
     game.roll(1);
     rollMany(16, 0);
 
-    expect(game.calculateTotalScore()).toBe(21);
+    expect(game.calculatescore()).toBe(21);
   });
 
   it('calculates the score when an strike is done', () => {
@@ -100,7 +100,7 @@ describe('The Bowling game', () => {
     game.roll(1);
     rollMany(17, 0);
 
-    expect(game.calculateTotalScore()).toBe(22);
+    expect(game.calculatescore()).toBe(22);
   });
 
   function rollMany(times: number, pins: number) {
