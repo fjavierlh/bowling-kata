@@ -14,6 +14,14 @@ class BowlingGame {
   calculateTotalScore(): number {
     const score = this.frames().reduce(
       ({ totalScore, currentFrameIndex }: Score) => {
+        if (this.rolls[currentFrameIndex] === this.maxScorePerFrame) {
+          return {
+            totalScore:
+              this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1] + this.rolls[currentFrameIndex + 2],
+            currentFrameIndex: currentFrameIndex + 1,
+          };
+        }
+
         if (this.isSpare(currentFrameIndex)) {
           return {
             totalScore: totalScore + this.bonusForSpare(currentFrameIndex),
@@ -83,7 +91,7 @@ describe('The Bowling game', () => {
     game.roll(10);
     game.roll(5);
     game.roll(1);
-    rollMany(17, 22);
+    rollMany(17, 0);
 
     expect(game.calculateTotalScore()).toBe(22);
   });
