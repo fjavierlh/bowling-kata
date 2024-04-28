@@ -11,7 +11,7 @@ class BowlingGame {
     this.rolls.push(pins);
   }
 
-  calculatescore(): number {
+  calculateScore(): number {
     const score = this.frames().reduce(
       ({ score, frame }: Score) => {
         if (this.isStrike(frame)) {
@@ -82,7 +82,7 @@ describe('The Bowling game', () => {
   it('calculates the score when no pins are bowled', () => {
     rollMany(20, 0);
 
-    expect(game.calculatescore()).toBe(0);
+    expect(game.calculateScore()).toBe(0);
   });
 
   it('calculates the score when an spare is done', () => {
@@ -91,7 +91,7 @@ describe('The Bowling game', () => {
     game.roll(1);
     rollMany(16, 0);
 
-    expect(game.calculatescore()).toBe(21);
+    expect(game.calculateScore()).toBe(21);
   });
 
   it('calculates the score when an strike is done', () => {
@@ -100,7 +100,7 @@ describe('The Bowling game', () => {
     game.roll(1);
     rollMany(17, 0);
 
-    expect(game.calculatescore()).toBe(22);
+    expect(game.calculateScore()).toBe(22);
   });
 
   function rollMany(times: number, pins: number) {
