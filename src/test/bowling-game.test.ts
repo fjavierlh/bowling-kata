@@ -6,7 +6,7 @@ class BowlingGame {
   }
 
   calculateTotalScore(): number {
-    return this.frames().reduce(
+    const score = this.frames().reduce(
       ({ totalScore, currentFrameIndex }: { totalScore: number; currentFrameIndex: number }) => {
         if (this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1] === 10) {
           return {
@@ -21,7 +21,8 @@ class BowlingGame {
         };
       },
       { totalScore: 0, currentFrameIndex: 0 }
-    ).totalScore;
+    );
+    return score.totalScore;
   }
 
   private frames() {
