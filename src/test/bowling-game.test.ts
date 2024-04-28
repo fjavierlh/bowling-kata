@@ -109,6 +109,22 @@ describe('The Bowling game', () => {
     expect(game.calculateScore()).toBe(300);
   });
 
+  it('calculates the score when is all frames 5-5 spares', () => {
+    rollMany(21, 5);
+
+    expect(game.calculateScore()).toBe(150);
+  });
+
+  it.only('calculates the score when is all frames 8-2 spares', () => {
+    Array.from({ length: 10 }).forEach(() => {
+      game.roll(8);
+      game.roll(2);
+    });
+    game.roll(8);
+
+    expect(game.calculateScore()).toBe(180);
+  });
+
   function rollMany(times: number, pins: number) {
     Array.from({ length: times }).forEach(() => game.roll(pins));
   }
