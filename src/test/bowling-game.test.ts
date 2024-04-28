@@ -19,4 +19,11 @@ describe('The Bowling game', () => {
     game.roll(0);
     expect(game.rolls).toEqual([0]);
   });
+
+  it('calculates the score for gutter when no pins are bowled', () => {
+    const game = new BowlingGame();
+    Array.from({ length: 20 }).forEach(() => game.roll(0));
+
+    expect(game.calculateTotalScore()).toBe(0);
+  });
 });
