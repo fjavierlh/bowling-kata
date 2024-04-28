@@ -71,8 +71,7 @@ describe('The Bowling game', () => {
   });
 
   it('calculates the score when an spare is done', () => {
-    game.roll(5);
-    game.roll(5);
+    rollSpare();
     game.roll(5);
     game.roll(1);
     rollMany(16, 0);
@@ -82,5 +81,10 @@ describe('The Bowling game', () => {
 
   function rollMany(times: number, pins: number) {
     Array.from({ length: times }).forEach(() => game.roll(pins));
+  }
+
+  function rollSpare() {
+    game.roll(5);
+    game.roll(5);
   }
 });
