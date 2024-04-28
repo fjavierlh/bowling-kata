@@ -32,6 +32,16 @@ describe('The Bowling game', () => {
     expect(game.calculateTotalScore()).toBe(0);
   });
 
+  it('calculates the score when an spare is done', () => {
+    game.roll(5);
+    game.roll(5);
+    game.roll(5);
+    game.roll(1);
+    rollMany(16, 0);
+
+    expect(game.calculateTotalScore()).toBe(21);
+  });
+
   function rollMany(times: number, pins: number) {
     Array.from({ length: times }).forEach(() => game.roll(pins));
   }
