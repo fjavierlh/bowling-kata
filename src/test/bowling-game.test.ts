@@ -26,7 +26,7 @@ describe('The Bowling game', () => {
     expect(game.rolls).toEqual([0]);
   });
 
-  it('calculates the score for gutter when no pins are bowled', () => {
+  it('calculates the score when no pins are bowled', () => {
     rollMany(20, 0);
 
     expect(game.calculateTotalScore()).toBe(0);
