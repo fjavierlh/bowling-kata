@@ -5,6 +5,9 @@ class BowlingGame {
     this.rolls.push(pins);
   }
 
+  calculateTotalScore(): number {
+    return 0;
+  }
 }
 
 describe('The Bowling game', () => {
