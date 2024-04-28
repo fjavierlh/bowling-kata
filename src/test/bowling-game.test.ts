@@ -5,6 +5,7 @@ type Score = {
 
 class BowlingGame {
   rolls: number[] = [];
+  maxScorePerFrame: number = 10;
 
   roll(pins: number) {
     this.rolls.push(pins);
@@ -13,15 +14,15 @@ class BowlingGame {
   calculateTotalScore(): number {
     const score = this.frames().reduce(
       ({ totalScore, currentFrameIndex }: Score) => {
-        if (this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1] === 10) {
+        if (this.isSpare(currentFrameIndex)) {
           return {
-            totalScore: totalScore + 10 + this.rolls[currentFrameIndex + 2],
+            totalScore: totalScore + this.bonusForSpare(currentFrameIndex),
             currentFrameIndex: currentFrameIndex + 2,
           };
         }
 
         return {
-          totalScore: totalScore + this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1],
+          totalScore: totalScore + this.sumPinsIn(currentFrameIndex),
           currentFrameIndex: currentFrameIndex + 2,
         };
       },
@@ -32,6 +33,18 @@ class BowlingGame {
 
   private frames() {
     return Array.from({ length: 10 }).map((_, i) => i);
+  }
+
+  private isSpare(currentFrameIndex: number) {
+    return this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1] === this.maxScorePerFrame;
+  }
+
+  private bonusForSpare(currentFrameIndex: number): number {
+    return this.maxScorePerFrame + this.rolls[currentFrameIndex + 2];
+  }
+
+  private sumPinsIn(currentFrameIndex: number): number {
+    return this.rolls[currentFrameIndex] + this.rolls[currentFrameIndex + 1];
   }
 }
 
