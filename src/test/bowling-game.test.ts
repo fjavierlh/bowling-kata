@@ -95,7 +95,7 @@ describe('The Bowling game', () => {
   });
 
   it('calculates the score when an strike is done', () => {
-    game.roll(10);
+    rollStrike();
     game.roll(5);
     game.roll(1);
     rollMany(17, 0);
@@ -110,5 +110,9 @@ describe('The Bowling game', () => {
   function rollSpare() {
     game.roll(5);
     game.roll(5);
+  }
+
+  function rollStrike() {
+    game.roll(10);
   }
 });
