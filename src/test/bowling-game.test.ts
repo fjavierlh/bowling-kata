@@ -14,14 +14,14 @@ class BowlingGame {
   calculateScore(): number {
     const score = this.frames().reduce(
       ({ score, frame }: Score) => {
-        if (this.isStrike(frame)) {
+        if (this.strikeIn(frame)) {
           return {
             score: score + this.scoreForStrike(frame),
             frame: frame + 1,
           };
         }
 
-        if (this.isSpare(frame)) {
+        if (this.spareIn(frame)) {
           return {
             score: score + this.scoreForSpare(frame),
             frame: frame + 2,
@@ -42,7 +42,7 @@ class BowlingGame {
     return Array.from({ length: 10 }).map((_, i) => i);
   }
 
-  private isStrike(frame: number) {
+  private strikeIn(frame: number) {
     return this.rolls[frame] === this.maxScorePerFrame;
   }
 
@@ -50,7 +50,7 @@ class BowlingGame {
     return this.rolls[frame] + this.rolls[frame + 1] + this.rolls[frame + 2];
   }
 
-  private isSpare(frame: number) {
+  private spareIn(frame: number) {
     return this.rolls[frame] + this.rolls[frame + 1] === this.maxScorePerFrame;
   }
 
