@@ -7,15 +7,6 @@ describe('The Bowling game', () => {
     game = new BowlingGame();
   });
 
-  it('can be created', () => {
-    expect(game).toBeInstanceOf(BowlingGame);
-  });
-
-  it('should be able to make a roll', () => {
-    game.roll(0);
-    expect(game.rolls).toEqual([0]);
-  });
-
   it('calculates the score when no pins are bowled', () => {
     rollMany(20, 0);
 

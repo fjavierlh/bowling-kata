@@ -4,8 +4,8 @@ type Score = {
 };
 
 export class BowlingGame {
-  rolls: number[] = [];
-  maxScorePerFrame: number = 10;
+  private readonly rolls: number[] = [];
+  private readonly maxScorePerFrame: number = 10;
 
   roll(pins: number) {
     this.rolls.push(pins);
