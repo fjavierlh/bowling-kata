@@ -12,35 +12,33 @@ export class BowlingGame {
   }
 
   calculateScore(): number {
-    const score = this.frames().reduce(
-      ({ score, frame }: Score) => {
-        if (this.strikeIn(frame)) {
-          return {
-            score: score + this.scoreForStrike(frame),
-            frame: frame + 1,
-          };
-        }
-
-        if (this.spareIn(frame)) {
-          return {
-            score: score + this.scoreForSpare(frame),
-            frame: frame + 2,
-          };
-        }
-
-        return {
-          score: score + this.scoreIn(frame),
-          frame: frame + 2,
-        };
-      },
-      { score: 0, frame: 0 }
-    );
-    return score.score;
+    return this.frames().reduce(this.calculateScorePerFrame, { score: 0, frame: 0 }).score;
   }
 
   private frames() {
     return Array.from({ length: 10 }).map((_, i) => i);
   }
+
+  private calculateScorePerFrame = ({ score, frame }: Score) => {
+    if (this.strikeIn(frame)) {
+      return {
+        score: score + this.scoreForStrike(frame),
+        frame: frame + 1,
+      };
+    }
+
+    if (this.spareIn(frame)) {
+      return {
+        score: score + this.scoreForSpare(frame),
+        frame: frame + 2,
+      };
+    }
+
+    return {
+      score: score + this.scoreIn(frame),
+      frame: frame + 2,
+    };
+  };
 
   private strikeIn(frame: number) {
     return this.rolls[frame] === this.maxScorePerFrame;
